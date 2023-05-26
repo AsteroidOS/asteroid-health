@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2019 Florent Revest <revestflo@gmail.com>
+ * Copyright (C) 2023 Arseniy Movshev <dodoradio@outlook.com>
+ *               2019 Florent Revest <revestflo@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,16 +19,21 @@
 import QtQuick 2.9
 import org.asteroid.controls 1.0
 
+import org.asteroid.sensorlogd 1.0
+
 Application {
     id: app
 
     centerColor: "#b04d1c"
     outerColor: "#421c0a"
 
+    StepsDataLoader {
+        Component.onCompleted: stepsLabel.text = getTodayData()
+    }
+
     Label {
-        id: hello
+        id: stepsLabel
         anchors.centerIn: parent
         horizontalAlignment: Text.AlignHCenter
-        text: "Hello World!"
     }
 }

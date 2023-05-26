@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(asteroid-helloworld
+project(asteroid-health
 	VERSION 0.0.1
 	DESCRIPTION "Sample application to get started on Asteroid")
 
@@ -17,14 +17,14 @@ include(AsteroidTranslations)
 
 add_subdirectory(src)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/asteroid-helloworld.in
-	${CMAKE_BINARY_DIR}/asteroid-helloworld
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/asteroid-health.in
+	${CMAKE_BINARY_DIR}/asteroid-health
 	@ONLY)
 
-install(PROGRAMS ${CMAKE_BINARY_DIR}/asteroid-helloworld
+install(PROGRAMS ${CMAKE_BINARY_DIR}/asteroid-health
 	DESTINATION ${CMAKE_INSTALL_BINDIR})
 
-generate_desktop(${CMAKE_SOURCE_DIR} asteroid-helloworld)
+generate_desktop(${CMAKE_SOURCE_DIR} asteroid-health)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
