@@ -37,6 +37,8 @@ Application {
         text: "Overview"
     }
 
+    property var weekday: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
     Flickable {
         anchors.fill: parent
         contentHeight: contentColumn.implicitHeight
@@ -61,7 +63,10 @@ Application {
                 width: parent.width*0.9
                 anchors.horizontalCenter: parent.horizontalCenter
                 property var valuesArr: []
+                property var labelsArr: []
                 property var maxValue: 0
+                property var divisionsInterval: 0
+                property var divisionsCount: 0
                 Component.onCompleted: {
                     var currDate = new Date()
                     currDate.setDate(currDate.getDate() - 7)
@@ -74,9 +79,20 @@ Application {
                                 maxValue = currvalue
                             }
                             valuesArr.push(currvalue)
+                            labelsArr.push(weekday[currDate.getDay()])
                         }
-                        graphRepeater.model = valuesArr.length
                     }
+
+                    //this code figures out graph scaling
+                    var powTen = Math.floor(Math.log10(maxValue))
+                    divisionsInterval = Math.pow(10,powTen)
+                                        console.log(Math.floor(maxValue/divisionsInterval))
+                    maxValue = divisionsInterval*Math.floor(maxValue/divisionsInterval) + (divisionsInterval/5)*Math.ceil((maxValue%divisionsInterval)/(divisionsInterval/5))
+                    divisionsCount = Math.floor(maxValue/divisionsInterval) + 1
+                    console.log(maxValue,divisionsInterval,divisionsCount)
+                    // now update the repeater so it reloads the data. for some reason a normal qml binding doesn't do it here.
+                    barsRepeater.model = valuesArr.length
+                    labelsRepeater.model = valuesArr.length
                 }
                 Label {
                     anchors {
@@ -85,23 +101,74 @@ Application {
                     }
                     text: "Steps"
                 }
-                Row {
+                Item {
                     height: app.height/2
                     anchors {
-                        margins: app.width*0.1
+                        margins: app.width*0.05
+                        left: parent.left
+                        right: parent.right
                     }
-                    Repeater {
-                        id: graphRepeater
-                        delegate: Item { //this contains the graph column and positions it correctly
-                            width: contentColumn.width/7
-                            height: stepsGraph.height
-                            Rectangle {
-                                anchors.bottom: parent.bottom
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                width: parent.width*2/3
-                                radius: width/2
-                                property int value: stepsGraph.valuesArr[index]
-                                height: value/stepsGraph.maxValue*parent.height
+                    Item {
+                        id: markerParent
+                        width: parent.width/8
+                        height: parent.height
+                        anchors {
+                            left: parent.left
+                            top: barsRow.top
+                            bottom: barsRow.bottom
+                        }
+                        Repeater {
+                            model: stepsGraph.divisionsCount
+                            delegate: Label {
+                                anchors.right: parent.right
+                                text: stepsGraph.divisionsInterval*index
+                                font.pixelSize: Dims.w(5)
+                                y: parent.height - parent.height*stepsGraph.divisionsInterval*index/stepsGraph.maxValue - height/2
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                        }
+                    }
+                    Row {
+                        id: barsRow
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            top: parent.top
+                            bottom: labelsRow.top
+                        }
+                        Repeater {
+                            id: barsRepeater
+                            delegate: Item { //this contains the graph column and positions it correctly
+                                width: stepsGraph.width/8
+                                height: parent.height
+                                Rectangle {
+                                    id: bar
+                                    anchors.bottom: parent.bottom
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    width: parent.width*2/3
+                                    radius: width/2
+                                    property int value: stepsGraph.valuesArr[index]
+                                    height: (value/stepsGraph.maxValue)*parent.height
+                                }
+                            }
+                        }
+                    }
+                    Row {
+                        id: labelsRow
+                        height: Dims.w(5)
+                        anchors {
+                            bottom: parent.bottom
+                            left: barsRow.left
+                            right: barsRow.right
+                        }
+                        Repeater {
+                            id: labelsRepeater
+                            delegate: Label {
+                                width: stepsGraph.width/8
+                                id: dowLabel
+                                // anchors.horizontalCenter: parent.horizontalCenter
+                                horizontalAlignment: Text.AlignHCenter
+                                text: stepsGraph.labelsArr[index]
+                                font.pixelSize: Dims.w(5)
                             }
                         }
                     }
