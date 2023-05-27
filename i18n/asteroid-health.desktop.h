@@ -2,5 +2,5 @@
  * will be integrated to i18n/.ts files, translated on Weblate and then merged
  * back with the .desktop.template file into a single .desktop file. */
 
-//% "Hello World App"
+//% "Health"
 qtTrId("id-app-launcher-name");
