@@ -35,11 +35,13 @@ Application {
     PageHeader {
         id: title
         text: "Overview"
+        z: 5
     }
 
     property var weekday: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
     Flickable {
+        z: 1
         anchors.fill: parent
         contentHeight: contentColumn.implicitHeight
         Column {
