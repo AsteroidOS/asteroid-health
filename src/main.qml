@@ -59,7 +59,7 @@ Application {
                         Label {
                             width: parent.width*0.8
                             anchors.horizontalCenter: parent.horizontalCenter
-                            text: "You've walked " + stepsDataLoader.getTodayData() + " steps today, keep it up!"
+                            text: stepsDataLoader.getTodayData() ? "You've walked " + stepsDataLoader.getTodayData() + " steps today, keep it up!" : "You haven't yet logged any steps today"
                             wrapMode: Text.WordWrap
                             horizontalAlignment: Text.AlignHCenter
                         }
