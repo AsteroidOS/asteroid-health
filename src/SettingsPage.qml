@@ -22,6 +22,10 @@ import org.asteroid.controls 1.0
 import org.asteroid.sensorlogd 1.0
 
 Item {
+    PageHeader {
+        text: "Settings"
+        z: 5
+    }
     LoggerSettings{
         id: loggerSettings
     }
