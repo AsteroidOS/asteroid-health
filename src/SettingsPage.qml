@@ -35,26 +35,29 @@ Item {
             Item { width: parent.width; height: parent.width*0.2}
 
             LabeledSwitch {
+                id: stepsEnableSwitch
                 width: parent.width
                 height: width*0.25
                 text: "Log step count"
-                onCheckedChanged: loggerSettings.stepCounterEnabled = checked
-                checked: loggerSettings.stepCounterEnabled
+                Component.onCompleted: checked = loggerSettings.stepCounterEnabled
             }
             LabeledSwitch {
                 id: hrEnableSwitch
                 width: parent.width
                 height: width*0.25
                 text: "Log heart rate"
-                onCheckedChanged: loggerSettings.heartrateSensorEnabled = checked
-                checked: loggerSettings.heartrateSensorEnabled
+                Component.onCompleted: checked = loggerSettings.heartrateSensorEnabled
             }
-            LabeledActionButton {
-                text: "reload dbus"
-                width: parent.width
-                height: width*0.25
+            IconButton {
+                iconName: "ios-checkmark-circle-outline"
+                height: parent.width*0.2
+                width: height
+                anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
-                    hrEnableSwitch.checked = loggerSettings.heartrateSensorEnabled
+                    loggerSettings.stepCounterEnabled = stepsEnableSwitch.checked
+                    loggerSettings.heartrateSensorEnabled = hrEnableSwitch.checked
+                    loggerSettings.reInitLogger()
+                    pageStack.pop(pageStack.currentLayer)
                 }
             }
         }
