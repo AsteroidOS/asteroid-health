@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>SettingsPage.qml</file>
+        <file>graphs/BarGraph.qml</file>
     </qresource>
 </RCC>

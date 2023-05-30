@@ -21,6 +21,8 @@ import org.asteroid.controls 1.0
 
 import org.asteroid.sensorlogd 1.0
 
+import "graphs"
+
 Application {
     id: app
 
@@ -60,16 +62,19 @@ Application {
                         }
 
                         Item { width: parent.width; height: parent.width*0.1}
+                        Label {
+                            anchors {
+                                left: parent.left
+                                margins: app.width*0.1
+                            }
+                            text: "Steps"
+                        }
 
-                        Column { //this is the graph of steps for the past week
+                        BarGraph {
                             id: stepsGraph
-                            width: parent.width*0.9
                             anchors.horizontalCenter: parent.horizontalCenter
-                            property var valuesArr: []
-                            property var labelsArr: []
-                            property var maxValue: 0
-                            property var divisionsInterval: 0
-                            property var divisionsCount: 0
+                            width: parent.width*0.9
+                            height: app.height*2/3
                             StepsDataLoader {
                                 id: stepsDataLoader
                                 Component.onCompleted: {
@@ -100,88 +105,7 @@ Application {
                                 maxValue = divisionsInterval*Math.floor(maxValue/divisionsInterval) + (divisionsInterval/5)*Math.ceil((maxValue%divisionsInterval)/(divisionsInterval/5))
                                 divisionsCount = Math.floor(maxValue/divisionsInterval) + 1
                                 console.log(maxValue,divisionsInterval,divisionsCount)
-                                // now update the repeater so it reloads the data. for some reason a normal qml binding doesn't do it here.
-                                barsRepeater.model = valuesArr.length
-                                labelsRepeater.model = valuesArr.length
-                            }
-                            Label {
-                                anchors {
-                                    left: parent.left
-                                    margins: app.width*0.1
-                                }
-                                text: "Steps"
-                            }
-                            Item {
-                                height: app.height/2
-                                anchors {
-                                    margins: app.width*0.05
-                                    left: parent.left
-                                    right: parent.right
-                                }
-                                Item {
-                                    id: markerParent
-                                    width: parent.width/8
-                                    height: parent.height
-                                    anchors {
-                                        left: parent.left
-                                        top: barsRow.top
-                                        bottom: barsRow.bottom
-                                    }
-                                    Repeater {
-                                        model: stepsGraph.divisionsCount
-                                        delegate: Label {
-                                            anchors.right: parent.right
-                                            text: stepsGraph.divisionsInterval*index
-                                            font.pixelSize: Dims.w(5)
-                                            y: parent.height - parent.height*stepsGraph.divisionsInterval*index/stepsGraph.maxValue - height/2
-                                            verticalAlignment: Text.AlignVCenter
-                                        }
-                                    }
-                                }
-                                Row {
-                                    id: barsRow
-                                    anchors {
-                                        horizontalCenter: parent.horizontalCenter
-                                        top: parent.top
-                                        bottom: labelsRow.top
-                                    }
-                                    Repeater {
-                                        id: barsRepeater
-                                        delegate: Item { //this contains the graph column and positions it correctly
-                                            width: stepsGraph.width/8
-                                            height: parent.height
-                                            Rectangle {
-                                                id: bar
-                                                anchors.bottom: parent.bottom
-                                                anchors.horizontalCenter: parent.horizontalCenter
-                                                width: parent.width*2/3
-                                                radius: width/2
-                                                property int value: stepsGraph.valuesArr[index]
-                                                height: (value/stepsGraph.maxValue)*parent.height
-                                            }
-                                        }
-                                    }
-                                }
-                                Row {
-                                    id: labelsRow
-                                    height: Dims.w(5)
-                                    anchors {
-                                        bottom: parent.bottom
-                                        left: barsRow.left
-                                        right: barsRow.right
-                                    }
-                                    Repeater {
-                                        id: labelsRepeater
-                                        delegate: Label {
-                                            width: stepsGraph.width/8
-                                            id: dowLabel
-                                            // anchors.horizontalCenter: parent.horizontalCenter
-                                            horizontalAlignment: Text.AlignHCenter
-                                            text: stepsGraph.labelsArr[index]
-                                            font.pixelSize: Dims.w(5)
-                                        }
-                                    }
-                                }
+                                dataLoadingDone()
                             }
                         }
 
