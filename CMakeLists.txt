@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 
 project(asteroid-health
 	VERSION 0.0.1
-	DESCRIPTION "Sample application to get started on Asteroid")
+	DESCRIPTION "Graphical interface for asteroid-sensorlogd")
 
 find_package(ECM REQUIRED NO_MODULE)
 find_package(AsteroidApp REQUIRED)
@@ -34,7 +34,6 @@ set(CPACK_DEBIAN_FILE_NAME "${lcproject_name}-${CMAKE_PROJECT_VERSION}.ipk")
 set(CPACK_STRIP_FILES TRUE)
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE armv7vehf-neon)
 if (NOT CPACK_PACKAGE_CONTACT) 
-    set(CPACK_PACKAGE_CONTACT bogus@example.org)
-    message(WARNING "No package contact specified: using ${CPACK_PACKAGE_CONTACT}")
+    set(CPACK_PACKAGE_CONTACT dodoradio@outlook.com)
 endif()
 include(CPack)
