@@ -27,11 +27,6 @@ Application {
     centerColor: "#b04d1c"
     outerColor: "#421c0a"
 
-    StepsDataLoader {
-        id: stepsDataLoader
-        // Component.onCompleted: stepsLabel.text = getTodayData()
-    }
-
     property var weekday: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
 
@@ -75,7 +70,14 @@ Application {
                             property var maxValue: 0
                             property var divisionsInterval: 0
                             property var divisionsCount: 0
-                            Component.onCompleted: {
+                            StepsDataLoader {
+                                id: stepsDataLoader
+                                Component.onCompleted: {
+                                    triggerDaemonRecording()
+                                    stepsGraph.loadData()
+                                }
+                            }
+                            function loadData() {
                                 var currDate = new Date()
                                 currDate.setDate(currDate.getDate() - 7)
                                 for (var i = 0; i < 7; i++) {
