@@ -3,5 +3,5 @@ Type=Application
 Categories=Applications;
 Exec=asteroid-health
 Icon=ios-pulse-outline
-X-Asteroid-Center-Color=#b04d1c
-X-Asteroid-Outer-Color=#421c0a
+X-Asteroid-Center-Color=#0097A6
+X-Asteroid-Outer-Color=#00060C

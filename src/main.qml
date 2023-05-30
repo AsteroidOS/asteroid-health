@@ -24,8 +24,8 @@ import org.asteroid.sensorlogd 1.0
 Application {
     id: app
 
-    centerColor: "#b04d1c"
-    outerColor: "#421c0a"
+    centerColor: "#0097A6"
+    outerColor: "#00060C"
 
     property var weekday: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
