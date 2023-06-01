@@ -45,12 +45,32 @@ Item {
                 text: "Log step count"
                 Component.onCompleted: checked = loggerSettings.stepCounterEnabled
             }
+            IntSelector {
+                id: stepsIntervalSelector
+                width: parent.width
+                height: width*0.25
+                value: loggerSettings.stepCounterInterval/60000
+                min: 5
+                max: 60
+                stepSize: 1
+                unitMarker: "m"
+            }
             LabeledSwitch {
                 id: hrEnableSwitch
                 width: parent.width
                 height: width*0.25
                 text: "Log heart rate"
                 Component.onCompleted: checked = loggerSettings.heartrateSensorEnabled
+            }
+            IntSelector {
+                id: hrIntervalSelector
+                width: parent.width
+                height: width*0.25
+                value: loggerSettings.heartrateSensorInterval/60000
+                min: 5
+                max: 60
+                stepSize: 1
+                unitMarker: "m"
             }
             IconButton {
                 iconName: "ios-checkmark-circle-outline"
@@ -59,7 +79,9 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
                     loggerSettings.stepCounterEnabled = stepsEnableSwitch.checked
+                    loggerSettings.stepCounterInterval = stepsIntervalSelector.value*60000
                     loggerSettings.heartrateSensorEnabled = hrEnableSwitch.checked
+                    loggerSettings.heartrateSensorInterval = hrIntervalSelector.value*60000
                     loggerSettings.reInitLogger()
                     pageStack.pop(pageStack.currentLayer)
                 }
