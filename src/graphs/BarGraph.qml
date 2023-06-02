@@ -33,7 +33,7 @@ Item {
     }
     Item { // labels column
         id: markerParent
-        width: parent.width/8
+        width: childrenRect.width
         height: parent.height
         anchors {
             left: parent.left
@@ -43,8 +43,9 @@ Item {
         Repeater {
             model: barGraph.divisionsCount
             delegate: Label {
-                anchors.left: parent.left
-                text: barGraph.divisionsInterval*index
+                width: implicitWidth
+                property var value: barGraph.divisionsInterval*index
+                text: value > 1000 ? value/1000 + "k" : value
                 font.pixelSize: Dims.w(5)
                 y: parent.height - parent.height*barGraph.divisionsInterval*index/barGraph.maxValue - height/2
                 verticalAlignment: Text.AlignVCenter
@@ -54,14 +55,14 @@ Item {
     Row { // bars
         id: barsRow
         anchors {
-            horizontalCenter: parent.horizontalCenter
+            left: markerParent.right
             top: parent.top
             bottom: labelsRow.top
         }
         Repeater {
             id: barsRepeater
             delegate: Item { //this contains the graph column and positions it correctly
-                width: barGraph.width/8
+                width: (barGraph.width-markerParent.width)/barGraph.valuesArr.length
                 height: parent.height
                 Rectangle {
                     id: bar
@@ -77,7 +78,7 @@ Item {
     }
     Row { //labels row
         id: labelsRow
-        height: Dims.w(5)
+        width: childrenRect.height
         anchors {
             bottom: parent.bottom
             left: barsRow.left
@@ -86,7 +87,7 @@ Item {
         Repeater {
             id: labelsRepeater
             delegate: Label {
-                width: barGraph.width/8
+                width: (barGraph.width-markerParent.width)/barGraph.valuesArr.length
                 id: dowLabel
                 // anchors.horizontalCenter: parent.horizontalCenter
                 horizontalAlignment: Text.AlignHCenter
