@@ -89,7 +89,7 @@ Application {
                                     currDate.setDate(currDate.getDate() + 1)
                                     console.log(currDate)
                                     var currvalue = stepsDataLoader.getDataForDate(currDate)
-                                    if (currvalue > 0 || valuesArr.count>0) {
+                                    if (currvalue > 0 || valuesArr.length > 0) {
                                         if (currvalue > maxValue) {
                                             maxValue = currvalue
                                         }
