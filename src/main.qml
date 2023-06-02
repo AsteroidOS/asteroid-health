@@ -73,8 +73,8 @@ Application {
                         BarGraph {
                             id: stepsGraph
                             anchors.horizontalCenter: parent.horizontalCenter
-                            width: parent.width*0.9
-                            height: app.height*2/3
+                            width: parent.width*0.85
+                            height: app.width*3/5
                             StepsDataLoader {
                                 id: stepsDataLoader
                                 Component.onCompleted: {
