@@ -62,7 +62,7 @@ Item {
         Repeater {
             id: barsRepeater
             delegate: Item { //this contains the graph column and positions it correctly
-                width: (barGraph.width-markerParent.width)/barGraph.valuesArr.length
+                width: (barGraph.width-markerParent.width)/Math.max(barGraph.valuesArr.length,3)
                 height: parent.height
                 Rectangle {
                     id: bar
