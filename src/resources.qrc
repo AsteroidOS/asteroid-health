@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>SettingsPage.qml</file>
         <file>graphs/BarGraph.qml</file>
+        <file>graphs/HrGraph.qml</file>
     </qresource>
 </RCC>

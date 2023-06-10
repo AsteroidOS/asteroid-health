@@ -15,9 +15,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtQml>
 #include <asteroidapp.h>
+
+#include "cpp/hrGraph.h"
 
 int main(int argc, char *argv[])
 {
+    qmlRegisterType<HrGraph>("org.asteroid.health", 1, 0, "HeartrateGraph");
     return AsteroidApp::main(argc, argv);
 }

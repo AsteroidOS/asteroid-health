@@ -1,4 +1,4 @@
-add_library(asteroid-health main.cpp resources.qrc)
+add_library(asteroid-health main.cpp cpp/hrGraph.cpp cpp/hrGraph.h resources.qrc)
 set_target_properties(asteroid-health PROPERTIES PREFIX "")
 
 target_link_libraries(asteroid-health PUBLIC

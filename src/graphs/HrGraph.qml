@@ -19,6 +19,7 @@
 import QtQuick 2.15
 import org.asteroid.controls 1.0
 
+import org.asteroid.health 1.0
 import org.asteroid.sensorlogd 1.0
 
 Item {
@@ -41,7 +42,8 @@ Item {
         labelsRepeater.model = labelsArr.length
     }
     Component.onCompleted: { // I am so so sorry about this code.
-        loadGraphData(hrDataLoader.getTodayData())
+        console.log(typeof hrDataLoader.getTodayData())
+        hrGraph.loadGraphData(hrDataLoader.getTodayData())
         console.log("minValue", hrGraph.minValue, "maxValue",hrGraph.maxValue)
         //values divisions
         valueDivisionsInterval = (valuesDelta) >= 50 ? 10 : 5
