@@ -88,6 +88,7 @@ void HrGraph::loadGraphData(QVariant fileDataInput) {
         if (minHrValue > m_filedata[i].y()) minHrValue = m_filedata[i].y();
         if (maxHrValue < m_filedata[i].y()) maxHrValue = m_filedata[i].y();
     }
+    emit loadingDone();
     update();
 }
 
