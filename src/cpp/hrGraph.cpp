@@ -77,6 +77,10 @@ void HrGraph::paint(QPainter *painter)
 void HrGraph::loadGraphData(QVariant fileDataInput) {
     qDebug() << "loadGraphData called";
     QList<QVariant> fileDataAsList = fileDataInput.toList();
+    if (fileDataAsList.count() < 1) {
+        qDebug() << "no heartrate data to show, failing load";
+        return;
+    }
     int j = fileDataAsList.count();
     minTime = fileDataAsList[0].toPoint().x();
     maxTime = fileDataAsList[j-1].toPoint().x();
