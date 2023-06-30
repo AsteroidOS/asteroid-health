@@ -27,6 +27,7 @@ Item {
     property var maxValue: 0
     property var divisionsInterval: 0
     property var divisionsCount: 0
+    property real indicatorLineHeight: 0
     function dataLoadingDone() {
         barsRepeater.model = valuesArr.length
         labelsRepeater.model = labelsArr.length
@@ -52,8 +53,18 @@ Item {
             }
         }
     }
+    Rectangle { // indicator line
+        id: indicatorLine
+        height: 1
+        z: 1
+        width: barsRepeater.count*(barGraph.width-markerParent.width)/Math.max(barGraph.valuesArr.length,3) - height/2
+        anchors.left: markerParent.right
+        y: barsRow.height*(1-(barGraph,indicatorLineHeight/barGraph.maxValue))
+        visible: barGraph.indicatorLineHeight != 0
+    }
     Row { // bars
         id: barsRow
+        z: 2
         anchors {
             left: markerParent.right
             top: parent.top

@@ -31,6 +31,10 @@ Application {
 
     property var weekday: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
+    LoggerSettings{
+        id: loggerSettings
+    }
+
 
     LayerStack {
         id: pageStack
@@ -107,6 +111,7 @@ Application {
                                 console.log(maxValue,divisionsInterval,divisionsCount)
                                 dataLoadingDone()
                             }
+                            indicatorLineHeight: loggerSettings.stepGoalEnabled ? loggerSettings.stepGoalTarget : 0
                         }
 
                         Item { width: parent.width; height: parent.width*0.1}

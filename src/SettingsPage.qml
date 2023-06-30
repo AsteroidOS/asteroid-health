@@ -26,9 +26,6 @@ Item {
         text: "Settings"
         z: 5
     }
-    LoggerSettings{
-        id: loggerSettings
-    }
     Flickable {
         anchors.fill: parent
         contentHeight: contentColumn.implicitHeight
