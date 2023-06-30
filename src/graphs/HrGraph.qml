@@ -46,7 +46,7 @@ Item {
         hrGraph.loadGraphData(hrDataLoader.getTodayData())
         console.log("minValue", hrGraph.minValue, "maxValue",hrGraph.maxValue)
         //values divisions
-        valueDivisionsInterval = (valuesDelta) >= 50 ? 10 : 5
+        valueDivisionsInterval = valuesDelta >= 50 ? (valuesDelta >= 100 ? 20: 10) : 5
         valueDivisionsCount = hrGraph.relativeMode ? (Math.ceil(hrGraph.maxValue/valueDivisionsInterval)) - (Math.ceil(hrGraph.minValue/valueDivisionsInterval)) : Math.ceil(hrGraph.maxValue/valueDivisionsInterval) + 1
         startValueDivision = hrGraph.relativeMode ? Math.ceil(hrGraph.minValue/valueDivisionsInterval)*valueDivisionsInterval : 0
         //times divisions
