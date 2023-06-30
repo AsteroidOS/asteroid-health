@@ -50,25 +50,24 @@ Item {
         valueDivisionsCount = hrGraph.relativeMode ? (Math.ceil(hrGraph.maxValue/valueDivisionsInterval)) - (Math.ceil(hrGraph.minValue/valueDivisionsInterval)) : Math.ceil(hrGraph.maxValue/valueDivisionsInterval) + 1
         startValueDivision = hrGraph.relativeMode ? Math.ceil(hrGraph.minValue/valueDivisionsInterval)*valueDivisionsInterval : 0
         //times divisions
-        var timeDelta = dateToDaySecs(hrGraph.maxTime) - dateToDaySecs(hrGraph.minTime)
+        minTimeSeconds = dateToDaySecs(hrGraph.minTime)
+        timeDelta = dateToDaySecs(hrGraph.maxTime) - minTimeSeconds
         timeDivisionsCount = Math.floor(timeDelta/3600) // get number of hours and divide
         timeDivisionsInterval = timeDivisionsCount > 11 ? 4 : 2
         timeDivisionsCount = timeDivisionsCount/timeDivisionsInterval
         startTimeDivision = hrGraph.minTime.getHours() + 1
-        minTimeSeconds = dateToDaySecs(hrGraph.minTime)
-        timeDelta = dateToDaySecs(hrGraph.maxTime) - minTimeSeconds
         labelsRepeater.model = graph.timeDivisionsCount
-
     }
     HrDataLoader { id: hrDataLoader }
     Item { // labels column
         id: markerParent
         width: parent.width/8
-        height: parent.height
         anchors {
             left: parent.left
             top: hrGraph.top
             bottom: hrGraph.bottom
+            topMargin: hrGraph.lineWidth/2
+            bottomMargin: anchors.topMargin
         }
         Repeater {
             model: graph.valueDivisionsCount
@@ -77,7 +76,7 @@ Item {
                 property real value: graph.startValueDivision + graph.valueDivisionsInterval*index
                 text: value
                 font.pixelSize: Dims.w(5)
-                y: parent.height /*- height/2*/ - (parent.height /*- hrGraph.lineWidth*2*/)*(value/graph.valuesDelta) /*+ hrGraph.lineWidth*/
+                y: parent.height - (parent.height)*(value/graph.valuesDelta) - height/2
                 verticalAlignment: Text.AlignVCenter
             }
         }
@@ -93,27 +92,27 @@ Item {
         relativeMode: false
         lineWidth: 4
     }
-    Row { //labels row
+    Item { //labels row
         id: labelsRow
         height: Dims.w(5)
         anchors {
             bottom: parent.bottom
             left: hrGraph.left
             right: hrGraph.right
-            // leftMargin:
+            rightMargin: hrGraph.lineWidth/2
+            leftMargin: anchors.rightMargin
         }
         Repeater {
             id: labelsRepeater
             model: 0
             delegate: Label {
-                width: graph.width/8
                 id: dowLabel
                 // anchors.horizontalCenter: parent.horizontalCenter
                 horizontalAlignment: Text.AlignHCenter
                 property var value: graph.startTimeDivision + index*graph.timeDivisionsInterval
                 text: value + ":00"
                 x: ((value*3600-graph.minTimeSeconds)/graph.timeDelta)*parent.width
-                onValueChanged: console.log("value",value,"x",x,"text",text)
+                onValueChanged: console.log("value",value, "mintimeseconds", graph.minTimeSeconds, "timeDelta", graph.timeDelta,"x",x,"text",text)
                 font.pixelSize: Dims.w(5)
             }
         }
