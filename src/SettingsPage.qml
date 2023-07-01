@@ -53,6 +53,23 @@ Item {
                 unitMarker: "m"
             }
             LabeledSwitch {
+                id: stepsGoalEnableSwitch
+                width: parent.width
+                height: width*0.25
+                text: "Enable steps goal"
+                Component.onCompleted: checked = loggerSettings.heartrateSensorEnabled
+            }
+            IntSelector {
+                id: stepsGoalSelector
+                width: parent.width
+                height: width*0.25
+                value: loggerSettings.stepGoalTarget
+                min: 500
+                max: 50000
+                stepSize: 500
+                unitMarker: " steps"
+            }
+            LabeledSwitch {
                 id: hrEnableSwitch
                 width: parent.width
                 height: width*0.25
@@ -77,6 +94,8 @@ Item {
                 onClicked: {
                     loggerSettings.stepCounterEnabled = stepsEnableSwitch.checked
                     loggerSettings.stepCounterInterval = stepsIntervalSelector.value*60000
+                    loggerSettings.stepGoalEnabled = stepsGoalEnableSwitch.checked
+                    loggerSettings.stepGoalTarget = stepsGoalSelector.value
                     loggerSettings.heartrateSensorEnabled = hrEnableSwitch.checked
                     loggerSettings.heartrateSensorInterval = hrIntervalSelector.value*60000
                     loggerSettings.reInitLogger()
