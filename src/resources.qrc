@@ -6,6 +6,7 @@
         <file>heartrate/HeartratePreview.qml</file>
         <file>heartrate/HeartrateDetailPage.qml</file>
         <file>weight/WeightPreview.qml</file>
+        <file>weight/WeightDetailPage.qml</file>
         <file>settings/RootSettingsPage.qml</file>
         <file>settings/LoggerSettingsPage.qml</file>
         <file>settings/UiSettingsPage.qml</file>

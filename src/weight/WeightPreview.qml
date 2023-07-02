@@ -22,27 +22,37 @@ import org.asteroid.controls 1.0
 import org.asteroid.sensorlogd 1.0
 
 import "../graphs"
-
-Column {
-    Label {
-        anchors {
-            left: parent.left
-            margins: app.width*0.1
+MouseArea {
+    height: column.implicitHeight
+    onClicked: pageStack.push(weightDetailPage)
+    Column {
+        id: column
+        anchors.fill: parent
+        Label {
+            anchors {
+                left: parent.left
+                margins: app.width*0.1
+            }
+            text: "Weight"
         }
-        text: "Weight"
+
+        Item { width: parent.width; height: parent.width*0.1}
+
+        WeightGraph {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width*0.9
+            height: app.height*2/3
+            Component.onCompleted: {
+                var d = new Date()
+                endTime = d
+                d.setDate(d.getDate() - 30)
+                startTime = d
+            }
+        }
     }
 
-    Item { width: parent.width; height: parent.width*0.1}
-
-    WeightGraph {
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: parent.width*0.9
-        height: app.height*2/3
-        Component.onCompleted: {
-            var d = new Date()
-            endTime = d
-            d.setDate(d.getDate() - 30)
-            startTime = d
-        }
+    Component {
+        id: weightDetailPage
+        WeightDetailPage {}
     }
 }
