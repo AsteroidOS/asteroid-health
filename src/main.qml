@@ -22,6 +22,7 @@ import org.asteroid.controls 1.0
 import org.asteroid.sensorlogd 1.0
 
 import "graphs"
+import "settings"
 
 Application {
     id: app
@@ -143,7 +144,7 @@ Application {
     }
     Component {
         id: settingsPage
-        SettingsPage {
+        RootSettingsPage {
         }
     }
 }

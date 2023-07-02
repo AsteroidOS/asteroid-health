@@ -23,7 +23,7 @@ import org.asteroid.sensorlogd 1.0
 
 Item {
     PageHeader {
-        text: "Settings"
+        text: "Logger Settings"
         z: 5
     }
     Flickable {
