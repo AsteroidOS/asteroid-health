@@ -18,6 +18,7 @@
 
 import QtQuick 2.15
 import org.asteroid.controls 1.0
+import Nemo.Configuration 1.0
 
 import org.asteroid.sensorlogd 1.0
 
@@ -34,6 +35,31 @@ Item {
             anchors.fill: parent
 
             Item { width: parent.width; height: parent.width*0.2}
+            LabeledSwitch {
+                width: parent.width
+                height: width*0.25
+                text: "Show step count preview"
+                checked: stepsPreviewVisible.value
+                onCheckedChanged: stepsPreviewVisible.value = checked
+            }
+            LabeledSwitch {
+                width: parent.width
+                height: width*0.25
+                text: "Show heartrate preview"
+                checked: hrPreviewVisible.value
+                onCheckedChanged: hrPreviewVisible.value = checked
+            }
         }
+    }
+
+    ConfigurationValue {
+        id: stepsPreviewVisible
+        key: "/org/asteroidos/health/ui/stepCounter/showpreview"
+        defaultValue: true
+    }
+    ConfigurationValue {
+        id: hrPreviewVisible
+        key: "/org/asteroidos/health/ui/heartrate/showpreview"
+        defaultValue: true
     }
 }
