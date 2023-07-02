@@ -18,6 +18,7 @@
 
 import QtQuick 2.15
 import org.asteroid.controls 1.0
+import Nemo.Configuration 1.0
 
 import org.asteroid.sensorlogd 1.0
 
@@ -31,8 +32,6 @@ Application {
 
     centerColor: "#0097A6"
     outerColor: "#00060C"
-
-    property var weekday: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
     LoggerSettings{
         id: loggerSettings
@@ -56,16 +55,18 @@ Application {
                     Column {
                         id: contentColumn
                         anchors.fill: parent
-                        Item { width: parent.width; height: parent.width*0.2}
+                        Item { width: parent.width; height: parent.width*0.2; visible: stepsPreviewVisible.value}
 
                         StepCounterPreview {
                             width: parent.width
+                            visible: stepsPreviewVisible.value
                         }
 
-                        Item { width: parent.width; height: parent.width*0.1}
+                        Item { width: parent.width; height: parent.width*0.1; visible: hrPreviewVisible.value}
 
                         HeartratePreview {
                             width: parent.width
+                            visible: hrPreviewVisible.value
                         }
 
                         ListItem {
@@ -79,6 +80,16 @@ Application {
                 }
             }
         }
+    }
+    ConfigurationValue {
+        id: stepsPreviewVisible
+        key: "/org/asteroidos/health/ui/stepCounter/showpreview"
+        defaultValue: true
+    }
+    ConfigurationValue {
+        id: hrPreviewVisible
+        key: "/org/asteroidos/health/ui/heartrate/showpreview"
+        defaultValue: true
     }
     Component {
         id: settingsPage
