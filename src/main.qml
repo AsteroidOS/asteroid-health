@@ -26,6 +26,7 @@ import "graphs"
 import "settings"
 import "stepCounter"
 import "heartrate"
+import "weight"
 
 Application {
     id: app
@@ -69,6 +70,13 @@ Application {
                             visible: hrPreviewVisible.value
                         }
 
+                        Item { width: parent.width; height: parent.width*0.1; visible: weightPreviewVisible.value}
+
+                        WeightPreview {
+                            width: parent.width
+                            visible: weightPreviewVisible.value
+                        }
+
                         ListItem {
                             title: "Settings"
                             iconName: "ios-settings-outline"
@@ -90,6 +98,11 @@ Application {
         id: hrPreviewVisible
         key: "/org/asteroidos/health/ui/heartrate/showpreview"
         defaultValue: true
+    }
+    ConfigurationValue {
+        id: weightPreviewVisible
+        key: "/org/asteroidos/health/ui/weight/showpreview"
+        defaultValue: false
     }
     Component {
         id: settingsPage

@@ -5,6 +5,7 @@
         <file>stepCounter/StepsDetailPage.qml</file>
         <file>heartrate/HeartratePreview.qml</file>
         <file>heartrate/HeartrateDetailPage.qml</file>
+        <file>weight/WeightPreview.qml</file>
         <file>settings/RootSettingsPage.qml</file>
         <file>settings/LoggerSettingsPage.qml</file>
         <file>settings/UiSettingsPage.qml</file>
@@ -13,5 +14,6 @@
         <file>graphs/StepsLineGraph.qml</file>
         <file>graphs/TimeLabels.qml</file>
         <file>graphs/VerticalLabels.qml</file>
+        <file>graphs/WeightGraph.qml</file>
     </qresource>
 </RCC>

@@ -49,6 +49,13 @@ Item {
                 checked: hrPreviewVisible.value
                 onCheckedChanged: hrPreviewVisible.value = checked
             }
+            LabeledSwitch {
+                width: parent.width
+                height: width*0.25
+                text: "Show weight preview"
+                checked: weightPreviewVisible.value
+                onCheckedChanged: weightPreviewVisible.value = checked
+            }
         }
     }
 
@@ -60,6 +67,11 @@ Item {
     ConfigurationValue {
         id: hrPreviewVisible
         key: "/org/asteroidos/health/ui/heartrate/showpreview"
+        defaultValue: true
+    }
+    ConfigurationValue {
+        id: weightPreviewVisible
+        key: "/org/asteroidos/health/ui/weight/showpreview"
         defaultValue: true
     }
 }
