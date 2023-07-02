@@ -18,10 +18,10 @@
 #include <QtQml>
 #include <asteroidapp.h>
 
-#include "cpp/hrGraph.h"
+#include "cpp/lineGraph.h"
 
 int main(int argc, char *argv[])
 {
-    qmlRegisterType<HrGraph>("org.asteroid.health", 1, 0, "HeartrateGraph");
+    qmlRegisterType<LineGraph>("org.asteroid.health", 1, 0, "LineGraph");
     return AsteroidApp::main(argc, argv);
 }

@@ -81,7 +81,7 @@ Item {
             }
         }
     }
-    HeartrateGraph {
+    LineGraph {
         id: hrGraph
         anchors {
             left: markerParent.right

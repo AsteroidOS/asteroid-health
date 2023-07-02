@@ -28,7 +28,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "hrGraph.h"
+#include "lineGraph.h"
 
 #include <QPainter>
 #include <QDate>
@@ -38,14 +38,14 @@
 #include <QStandardPaths>
 #include <QPointF>
 
-HrGraph::HrGraph()
+LineGraph::LineGraph()
 {
     setFlag(ItemHasContents, true);
     setAntialiasing(true);
     setRenderTarget(QQuickPaintedItem::FramebufferObject);
 }
 
-void HrGraph::paint(QPainter *painter)
+void LineGraph::paint(QPainter *painter)
 {
     if (!m_fileLoadStatus) {
         return;
@@ -53,15 +53,15 @@ void HrGraph::paint(QPainter *painter)
     int j = m_filedata.count();
     QPointF points[j];
     if (!graphRelative) {
-        minHrValue = 0;
+        minValue = 0;
     }
-    float valueDelta = maxHrValue - minHrValue;
+    float valueDelta = maxValue - minValue;
     float timeDelta = maxTime - minTime;
     float calculatedValue = 0;
     float calculatedTimeSeconds = 0;
     for(int i = 0; i < j; i++) {
         calculatedTimeSeconds = (m_filedata[i].x() - minTime)/timeDelta;
-        calculatedValue = 1 - (m_filedata[i].y() - minHrValue)/valueDelta;
+        calculatedValue = 1 - (m_filedata[i].y() - minValue)/valueDelta;
         points[i] = QPointF(m_lineWidth + calculatedTimeSeconds*(width()-2*m_lineWidth), m_lineWidth + calculatedValue*(height()-2*m_lineWidth)); //these +2 -1 are here to make sure that the graph fits within the drawn area, as it will be clipped by qt if it doesn't.
     }
     QPen pen;
@@ -74,7 +74,7 @@ void HrGraph::paint(QPainter *painter)
     painter->drawPolyline(points,j);
 }
 
-void HrGraph::loadGraphData(QVariant fileDataInput) {
+void LineGraph::loadGraphData(QVariant fileDataInput) {
     qDebug() << "loadGraphData called";
     QList<QVariant> fileDataAsList = fileDataInput.toList();
     if (fileDataAsList.count() < 1) {
@@ -84,56 +84,56 @@ void HrGraph::loadGraphData(QVariant fileDataInput) {
     int j = fileDataAsList.count();
     minTime = fileDataAsList[0].toPoint().x();
     maxTime = fileDataAsList[j-1].toPoint().x();
-    minHrValue = fileDataAsList[0].toPoint().y();
-    maxHrValue = minHrValue;
+    minValue = fileDataAsList[0].toPoint().y();
+    maxValue = minValue;
     m_filedata.clear();
     for(int i = 0; i < j; i++) {
         m_filedata.append(fileDataAsList[i].toPoint());
-        if (minHrValue > m_filedata[i].y()) minHrValue = m_filedata[i].y();
-        if (maxHrValue < m_filedata[i].y()) maxHrValue = m_filedata[i].y();
+        if (minValue > m_filedata[i].y()) minValue = m_filedata[i].y();
+        if (maxValue < m_filedata[i].y()) maxValue = m_filedata[i].y();
     }
     emit loadingDone();
     update();
 }
 
-void HrGraph::setLineColor(QColor color) {
+void LineGraph::setLineColor(QColor color) {
     m_color = color;
     update();
 }
 
-QColor HrGraph::lineColor() {
+QColor LineGraph::lineColor() {
     return m_color;
 }
 
-void HrGraph::setLineWidth(float width) {
+void LineGraph::setLineWidth(float width) {
     m_lineWidth = width;
     update();
 }
 
-float HrGraph::lineWidth() {
+float LineGraph::lineWidth() {
     return m_lineWidth;
 }
 
-int HrGraph::getMaxHrValue() {
-    return maxHrValue;
+int LineGraph::getMaxValue() {
+    return maxValue;
 }
 
-int HrGraph::getMinHrValue() {
-    return minHrValue;
+int LineGraph::getMinValue() {
+    return minValue;
 }
 
-QDateTime HrGraph::getMaxTime() {
+QDateTime LineGraph::getMaxTime() {
     return QDateTime::fromSecsSinceEpoch(maxTime);
 }
 
-QDateTime HrGraph::getMinTime() {
+QDateTime LineGraph::getMinTime() {
     return QDateTime::fromSecsSinceEpoch(minTime);
 }
 
-bool HrGraph::relative() {
+bool LineGraph::relative() {
     return graphRelative;
 }
 
-void HrGraph::setRelative(bool newRelative) {
+void LineGraph::setRelative(bool newRelative) {
     graphRelative = newRelative;
 }

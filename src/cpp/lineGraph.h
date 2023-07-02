@@ -27,8 +27,8 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef HRGRAPH_H
-#define HRGRAPH_H
+#ifndef LINEGRAPH_H
+#define LINEGRAPH_H
 
 #include <QQuickPaintedItem>
 #include <QPixmap>
@@ -36,21 +36,21 @@
 #include <QVector>
 #include <QPointF>
 
-class HrGraph : public QQuickPaintedItem
+class LineGraph : public QQuickPaintedItem
 {
     Q_OBJECT
 
     Q_PROPERTY(float lineWidth READ lineWidth WRITE setLineWidth)
     Q_PROPERTY(QColor lineColor READ lineColor WRITE setLineColor NOTIFY lineColorChanged)
-    Q_PROPERTY(int maxValue READ getMaxHrValue NOTIFY loadingDone)
-    Q_PROPERTY(int minValue READ getMinHrValue NOTIFY loadingDone)
+    Q_PROPERTY(int maxValue READ getMaxValue NOTIFY loadingDone)
+    Q_PROPERTY(int minValue READ getMinValue NOTIFY loadingDone)
     Q_PROPERTY(QDateTime maxTime READ getMaxTime NOTIFY loadingDone)
     Q_PROPERTY(QDateTime minTime READ getMinTime NOTIFY loadingDone)
     Q_PROPERTY(bool relativeMode READ relative WRITE setRelative)
 
 public:
     Q_INVOKABLE void loadGraphData(QVariant fileDataInput);
-    HrGraph();
+    LineGraph();
     void paint(QPainter *painter) override;
 
 signals:
@@ -62,8 +62,8 @@ public slots:
     void setLineWidth(float width);
     QColor lineColor();
     void setLineColor(QColor color);
-    int getMaxHrValue();
-    int getMinHrValue();
+    int getMaxValue();
+    int getMinValue();
     QDateTime getMaxTime();
     QDateTime getMinTime();
     bool relative();
@@ -77,11 +77,11 @@ private:
     QPixmap m_pixmap;
     QList<QPointF> m_filedata;
     bool m_fileLoadStatus;
-    int minHrValue = 0;
-    int maxHrValue = 0;
+    int minValue = 0;
+    int maxValue = 0;
     int minTime;
     int maxTime;
     bool graphRelative;
 };
 
-#endif // ICON_H
+#endif // LINEGRAPH_H
