@@ -26,59 +26,22 @@ Item {
     id: graph
     width: parent.width*0.9
     anchors.horizontalCenter: parent.horizontalCenter
-    property var labelsArr: []
-    property var valueDivisionsInterval: 0
-    property var valueDivisionsCount: 0
-    property var startValueDivision: 0
-    property real valuesDelta: hrGraph.relativeMode ? hrGraph.maxValue - hrGraph.minValue : hrGraph.maxValue
 
-    property var timeDivisionsCount: 0
-    property var timeDivisionsInterval: 0
-    property var startTimeDivision: 0
-    property var timeDelta: 0
-    property var minTimeSeconds: 0
-
-    function dataLoadingDone() {
-        labelsRepeater.model = labelsArr.length
-    }
-    Component.onCompleted: { // I am so so sorry about this code.
-        console.log(typeof hrDataLoader.getTodayData())
+    Component.onCompleted: {
         hrGraph.loadGraphData(hrDataLoader.getTodayData())
-        console.log("minValue", hrGraph.minValue, "maxValue",hrGraph.maxValue)
-        //values divisions
-        valueDivisionsInterval = valuesDelta >= 50 ? (valuesDelta >= 100 ? 20: 10) : 5
-        valueDivisionsCount = hrGraph.relativeMode ? (Math.ceil(hrGraph.maxValue/valueDivisionsInterval)) - (Math.ceil(hrGraph.minValue/valueDivisionsInterval)) : Math.ceil(hrGraph.maxValue/valueDivisionsInterval) + 1
-        startValueDivision = hrGraph.relativeMode ? Math.ceil(hrGraph.minValue/valueDivisionsInterval)*valueDivisionsInterval : 0
-        //times divisions
-        minTimeSeconds = dateToDaySecs(hrGraph.minTime)
-        timeDelta = dateToDaySecs(hrGraph.maxTime) - minTimeSeconds
-        timeDivisionsCount = Math.floor(timeDelta/3600) // get number of hours and divide
-        timeDivisionsInterval = timeDivisionsCount > 11 ? 4 : 2
-        timeDivisionsCount = timeDivisionsCount/timeDivisionsInterval
-        startTimeDivision = hrGraph.minTime.getHours() + 1
-        labelsRepeater.model = graph.timeDivisionsCount
     }
     HrDataLoader { id: hrDataLoader }
-    Item { // labels column
+    VerticalLabels { // labels column
         id: markerParent
         width: parent.width/8
+        startValue: 0
+        endValue: hrGraph.maxValue
         anchors {
             left: parent.left
             top: hrGraph.top
             bottom: hrGraph.bottom
             topMargin: hrGraph.lineWidth/2
             bottomMargin: anchors.topMargin
-        }
-        Repeater {
-            model: graph.valueDivisionsCount
-            delegate: Label {
-                anchors.right: parent.right
-                property real value: graph.startValueDivision + graph.valueDivisionsInterval*index
-                text: value
-                font.pixelSize: Dims.w(5)
-                y: parent.height - (parent.height)*(value/graph.valuesDelta) - height/2
-                verticalAlignment: Text.AlignVCenter
-            }
         }
     }
     LineGraph {
@@ -92,9 +55,11 @@ Item {
         relativeMode: false
         lineWidth: 4
     }
-    Item { //labels row
+    TimeLabels {
         id: labelsRow
         height: Dims.w(5)
+        startTime: hrGraph.minTime / 1000
+        endTime: hrGraph.maxTime / 1000
         anchors {
             bottom: parent.bottom
             left: hrGraph.left
@@ -102,22 +67,5 @@ Item {
             rightMargin: hrGraph.lineWidth/2
             leftMargin: anchors.rightMargin
         }
-        Repeater {
-            id: labelsRepeater
-            model: 0
-            delegate: Label {
-                id: dowLabel
-                // anchors.horizontalCenter: parent.horizontalCenter
-                horizontalAlignment: Text.AlignHCenter
-                property var value: graph.startTimeDivision + index*graph.timeDivisionsInterval
-                text: value + ":00"
-                x: ((value*3600-graph.minTimeSeconds)/graph.timeDelta)*parent.width
-                onValueChanged: console.log("value",value, "mintimeseconds", graph.minTimeSeconds, "timeDelta", graph.timeDelta,"x",x,"text",text)
-                font.pixelSize: Dims.w(5)
-            }
-        }
-    }
-    function dateToDaySecs(date) {
-        return (date.getHours()*3600 + date.getMinutes()*60 + date.getSeconds())
     }
 }
