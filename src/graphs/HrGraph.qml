@@ -24,8 +24,6 @@ import org.asteroid.sensorlogd 1.0
 
 Item {
     id: graph
-    width: parent.width*0.9
-    anchors.horizontalCenter: parent.horizontalCenter
 
     Component.onCompleted: {
         hrGraph.loadGraphData(hrDataLoader.getTodayData())

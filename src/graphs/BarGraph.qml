@@ -21,7 +21,6 @@ import org.asteroid.controls 1.0
 
 Item {
     id: barGraph
-    anchors.horizontalCenter: parent.horizontalCenter
     property var valuesArr: []
     property var labelsArr: []
     property var maxValue: 0
