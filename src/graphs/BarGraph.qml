@@ -25,33 +25,21 @@ Item {
     property var valuesArr: []
     property var labelsArr: []
     property var maxValue: 0
-    property var divisionsInterval: 0
-    property var divisionsCount: 0
     property real indicatorLineHeight: 0
     function dataLoadingDone() {
         barsRepeater.model = valuesArr.length
         labelsRepeater.model = labelsArr.length
     }
-    Item { // labels column
+    VerticalLabels { // labels column
         id: markerParent
-        width: childrenRect.width
         height: parent.height
+        width: parent.height*0.1
         anchors {
             left: parent.left
             top: barsRow.top
             bottom: barsRow.bottom
         }
-        Repeater {
-            model: barGraph.divisionsCount
-            delegate: Label {
-                width: implicitWidth
-                property var value: barGraph.divisionsInterval*index
-                text: value > 1000 ? value/1000 + "k" : value
-                font.pixelSize: Dims.w(5)
-                y: parent.height - parent.height*barGraph.divisionsInterval*index/barGraph.maxValue - height/2
-                verticalAlignment: Text.AlignVCenter
-            }
-        }
+        endValue: barGraph.maxValue
     }
     Rectangle { // indicator line
         id: indicatorLine

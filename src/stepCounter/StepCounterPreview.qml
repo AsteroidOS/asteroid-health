@@ -70,14 +70,6 @@ Column {
                     labelsArr.push(weekday[currDate.getDay()])
                 }
             }
-
-            //this code figures out graph scaling
-            var powTen = Math.floor(Math.log10(maxValue))
-            divisionsInterval = Math.pow(10,powTen)
-                                console.log(Math.floor(maxValue/divisionsInterval))
-            maxValue = divisionsInterval*Math.floor(maxValue/divisionsInterval) + (divisionsInterval/5)*Math.ceil((maxValue%divisionsInterval)/(divisionsInterval/5))
-            divisionsCount = Math.floor(maxValue/divisionsInterval) + 1
-            console.log(maxValue,divisionsInterval,divisionsCount)
             dataLoadingDone()
         }
         indicatorLineHeight: loggerSettings.stepGoalEnabled ? loggerSettings.stepGoalTarget : 0
