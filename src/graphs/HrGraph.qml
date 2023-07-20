@@ -24,9 +24,14 @@ import org.asteroid.sensorlogd 1.0
 
 Item {
     id: graph
+    property date startTime: new Date()
+    property date endTime: new Date()
+
+    onStartTimeChanged: hrGraph.loadGraphData(hrDataLoader.getDataFromTo(startTime,endTime))
+    onEndTimeChanged: hrGraph.loadGraphData(hrDataLoader.getDataFromTo(startTime,endTime))
 
     Component.onCompleted: {
-        hrGraph.loadGraphData(hrDataLoader.getTodayData())
+        hrGraph.loadGraphData(hrDataLoader.getDataFromTo(startTime,endTime))
     }
     HrDataLoader { id: hrDataLoader }
     VerticalLabels { // labels column
