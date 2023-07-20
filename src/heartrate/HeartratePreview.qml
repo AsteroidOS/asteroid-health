@@ -23,20 +23,30 @@ import org.asteroid.sensorlogd 1.0
 
 import "../graphs"
 
-Column {
-    Label {
-        anchors {
-            left: parent.left
-            margins: app.width*0.1
+MouseArea {
+    implicitHeight: contentColumn.implicitHeight
+    Column {
+        id: contentColumn
+        anchors.fill: parent
+        Label {
+            anchors {
+                left: parent.left
+                margins: app.width*0.1
+            }
+            text: "Heartrate"
         }
-        text: "Heartrate"
+
+        Item { width: parent.width; height: parent.width*0.05}
+
+        HrGraph {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width*0.9
+            height: app.height*2/3
+        }
     }
-
-    Item { width: parent.width; height: parent.width*0.05}
-
-    HrGraph {
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: parent.width*0.9
-        height: app.height*2/3
+    onClicked: pageStack.push(detailPage)
+    Component {
+        id: detailPage
+        HeartrateDetailPage {}
     }
 }
