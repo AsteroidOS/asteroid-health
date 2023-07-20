@@ -23,57 +23,67 @@ import org.asteroid.sensorlogd 1.0
 
 import "../graphs"
 
-Column {
+MouseArea {
+    implicitHeight: contentColumn.implicitHeight
     property var weekday: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    Column {
+        id: contentColumn
+        width: parent.width
 
-    Label {
-        width: parent.width*0.8
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: stepsDataLoader.getTodayTotal() ? "You've walked " + stepsDataLoader.todayTotal + " steps today, keep it up!" : "You haven't yet logged any steps today"
-        wrapMode: Text.WordWrap
-        horizontalAlignment: Text.AlignHCenter
-    }
-
-    Item { width: parent.width; height: parent.width*0.1}
-    Label {
-        anchors {
-            left: parent.left
-            margins: app.width*0.1
+        Label {
+            width: parent.width*0.8
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: stepsDataLoader.getTodayTotal() ? "You've walked " + stepsDataLoader.todayTotal + " steps today, keep it up!" : "You haven't yet logged any steps today"
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
         }
-        text: "Steps"
-    }
 
-    Item { width: parent.width; height: parent.width*0.05}
-
-    BarGraph {
-        id: stepsGraph
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: parent.width*0.85
-        height: app.width*3/5
-        StepsDataLoader {
-            id: stepsDataLoader
-            Component.onCompleted: {
-                triggerDaemonRecording()
-                stepsGraph.loadData()
+        Item { width: parent.width; height: parent.width*0.1}
+        Label {
+            anchors {
+                left: parent.left
+                margins: app.width*0.1
             }
+            text: "Steps"
         }
-        function loadData() {
-            var currDate = new Date()
-            currDate.setDate(currDate.getDate() - 7)
-            for (var i = 0; i < 7; i++) {
-                currDate.setDate(currDate.getDate() + 1)
-                console.log(currDate)
-                var currvalue = stepsDataLoader.getTotalForDate(currDate)
-                if (currvalue > 0 || valuesArr.length > 0) {
-                    if (currvalue > maxValue) {
-                        maxValue = currvalue
-                    }
-                    valuesArr.push(currvalue)
-                    labelsArr.push(weekday[currDate.getDay()])
+
+        Item { width: parent.width; height: parent.width*0.05}
+
+        BarGraph {
+            id: stepsGraph
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width*0.85
+            height: app.width*3/5
+            StepsDataLoader {
+                id: stepsDataLoader
+                Component.onCompleted: {
+                    triggerDaemonRecording()
+                    stepsGraph.loadData()
                 }
             }
-            dataLoadingDone()
+            function loadData() {
+                var currDate = new Date()
+                currDate.setDate(currDate.getDate() - 7)
+                for (var i = 0; i < 7; i++) {
+                    currDate.setDate(currDate.getDate() + 1)
+                    console.log(currDate)
+                    var currvalue = stepsDataLoader.getTotalForDate(currDate)
+                    if (currvalue > 0 || valuesArr.length > 0) {
+                        if (currvalue > maxValue) {
+                            maxValue = currvalue
+                        }
+                        valuesArr.push(currvalue)
+                        labelsArr.push(weekday[currDate.getDay()])
+                    }
+                }
+                dataLoadingDone()
+            }
+            indicatorLineHeight: loggerSettings.stepGoalEnabled ? loggerSettings.stepGoalTarget : 0
         }
-        indicatorLineHeight: loggerSettings.stepGoalEnabled ? loggerSettings.stepGoalTarget : 0
+    }
+    onClicked: pageStack.push(detailPage)
+    Component {
+        id: detailPage
+        StepsDetailPage {}
     }
 }
