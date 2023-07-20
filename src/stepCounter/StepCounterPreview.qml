@@ -43,6 +43,8 @@ Column {
         text: "Steps"
     }
 
+    Item { width: parent.width; height: parent.width*0.05}
+
     BarGraph {
         id: stepsGraph
         anchors.horizontalCenter: parent.horizontalCenter

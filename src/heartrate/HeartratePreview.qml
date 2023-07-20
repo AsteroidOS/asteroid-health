@@ -32,7 +32,7 @@ Column {
         text: "Heartrate"
     }
 
-    Item { width: parent.width; height: parent.width*0.1}
+    Item { width: parent.width; height: parent.width*0.05}
 
     HrGraph {
         anchors.horizontalCenter: parent.horizontalCenter
