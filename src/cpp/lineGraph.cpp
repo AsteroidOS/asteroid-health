@@ -47,7 +47,8 @@ LineGraph::LineGraph()
 
 void LineGraph::paint(QPainter *painter)
 {
-    if (!m_fileLoadStatus) {
+    if (m_filedata.count() < 2) {
+        qDebug() << "not rendering, not enough data";
         return;
     }
     int j = m_filedata.count();

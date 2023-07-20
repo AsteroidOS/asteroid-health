@@ -76,7 +76,6 @@ private:
     QColor m_color = QColor(255,255,255);
     QPixmap m_pixmap;
     QList<QPointF> m_filedata;
-    bool m_fileLoadStatus;
     int minValue = 0;
     int maxValue = 0;
     int minTime;
