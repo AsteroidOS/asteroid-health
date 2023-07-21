@@ -33,7 +33,9 @@ Item {
     Component.onCompleted: {
         hrGraph.loadGraphData(hrDataLoader.getDataFromTo(startTime,endTime))
     }
-    HrDataLoader { id: hrDataLoader }
+    HrDataLoader { id: hrDataLoader
+        onDataChanged: hrGraph.loadGraphData(getDataFromTo(startTime,endTime))
+    }
     VerticalLabels { // labels column
         id: markerParent
         width: parent.width/8

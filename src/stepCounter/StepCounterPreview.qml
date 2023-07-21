@@ -60,8 +60,12 @@ MouseArea {
                     triggerDaemonRecording()
                     stepsGraph.loadData()
                 }
+                onDataChanged: stepsGraph.loadData()
             }
             function loadData() {
+                valuesArr = []
+                labelsArr = []
+                colorsArr = []
                 var currDate = new Date()
                 currDate.setDate(currDate.getDate() - 7)
                 for (var i = 0; i < 7; i++) {

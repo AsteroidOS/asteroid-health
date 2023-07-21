@@ -66,6 +66,7 @@ Item {
                         triggerDaemonRecording()
                         stepsGraph.loadData()
                     }
+                    onDataChanged: stepsGraph.loadData()
                 }
                 function loadData() {
                     valuesArr = []

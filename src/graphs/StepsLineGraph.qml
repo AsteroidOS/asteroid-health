@@ -33,7 +33,9 @@ Item {
     Component.onCompleted: {
         stepsGraph.loadGraphData(stepsDataLoader.getDataFromTo(startTime,endTime))
     }
-    StepsDataLoader { id: stepsDataLoader }
+    StepsDataLoader { id: stepsDataLoader
+        onDataChanged: stepsGraph.loadGraphData(getDataFromTo(startTime,endTime))
+    }
     VerticalLabels { // labels column
         id: markerParent
         width: parent.width/8
