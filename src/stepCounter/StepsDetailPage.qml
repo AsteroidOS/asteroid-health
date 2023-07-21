@@ -36,15 +36,84 @@ Item {
             Item { width: parent.width; height: parent.width*0.2}
 
             Label {
+                width: parent.width*0.8
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: stepsDataLoader.getTodayTotal() ? "You've walked " + stepsDataLoader.todayTotal + " steps today, keep it up!" : "You haven't yet logged any steps today"
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignHCenter
+            }
+
+            Item { width: parent.width; height: parent.width*0.1}
+            Label {
                 anchors {
                     left: parent.left
                     margins: app.width*0.1
                 }
-                text: graph.startTime.toLocaleDateString()
+                text: "Steps"
+            }
+
+            Item { width: parent.width; height: parent.width*0.05}
+
+            BarGraph {
+                id: stepsGraph
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: parent.width*0.85
+                height: app.width*3/5
+                property date selectedTime: stepsLineGraph.startTime
+                StepsDataLoader {
+                    id: stepsDataLoader
+                    Component.onCompleted: {
+                        triggerDaemonRecording()
+                        stepsGraph.loadData()
+                    }
+                }
+                function loadData() {
+                    valuesArr = []
+                    labelsArr = []
+                    colorsArr = []
+                    var currDate = new Date()
+                    currDate.setDate(currDate.getDate() - 7)
+                    for (var i = 0; i < 7; i++) {
+                        currDate.setDate(currDate.getDate() + 1)
+                        console.log(currDate)
+                        var currvalue = stepsDataLoader.getTotalForDate(currDate)
+                        if (currvalue > 0 || valuesArr.length > 0) {
+                            if (currvalue > maxValue) {
+                                maxValue = currvalue
+                            }
+                            valuesArr.push(currvalue)
+                            labelsArr.push(weekday[currDate.getDay()])
+                            if(dateCompare(currDate,stepsLineGraph.startTime) && dateCompare(currDate, stepsLineGraph.endTime)) {
+                                colorsArr.push("#FFF")
+                            } else {
+                                colorsArr.push("#AAA")
+                            }
+                        }
+                    }
+                    dataLoadingDone()
+                }
+                indicatorLineHeight: loggerSettings.stepGoalEnabled ? loggerSettings.stepGoalTarget : 0
+                onBarClicked: (index)=> {
+                    var d = new Date()
+                    d.setDate(d.getDate() - 6 + index)
+                    stepsLineGraph.startTime = d
+                    stepsLineGraph.endTime = d
+                    loadData()
+                }
+            }
+
+            Item { width: parent.width; height: parent.width*0.2}
+
+            Label {
+                anchors {
+                    left: parent.left
+                    margins: app.width*0.1
+                }
+                text: stepsLineGraph.startTime.toLocaleDateString()
             }
 
             StepsLineGraph {
-                id: graph
+                id: stepsLineGraph
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width*0.9
                 height: app.height*2/3
@@ -63,9 +132,10 @@ Item {
                         text: "3 weeks"
                     }
                     onClicked: {
-                        var d = graph.endTime
+                        var d = stepsLineGraph.endTime
                         d.setDate(d.getDate() - 20)
-                        graph.startTime = d
+                        stepsLineGraph.startTime = d
+                        stepsGraph.loadData()
                     }
                 }
                 MouseArea {
@@ -76,9 +146,10 @@ Item {
                         text: "week"
                     }
                     onClicked: {
-                        var d = graph.endTime
+                        var d = stepsLineGraph.endTime
                         d.setDate(d.getDate() - 6)
-                        graph.startTime = d
+                        stepsLineGraph.startTime = d
+                        stepsGraph.loadData()
                     }
                 }
                 MouseArea {
@@ -89,13 +160,17 @@ Item {
                         text: "day"
                     }
                     onClicked: {
-                        graph.startTime = graph.endTime
+                        stepsLineGraph.startTime = stepsLineGraph.endTime
+                        stepsGraph.loadData()
                     }
                 }
             }
 
             Item { width: parent.width; height: parent.width*0.2}
         }
+    }
+    function dateCompare(date1, date2) {
+        return (date1.getFullYear() == date2.getFullYear()) && (date1.getMonth() == date2.getMonth()) && (date1.getDate() == date2.getDate())
     }
     PageHeader {
         text: "Steps"
