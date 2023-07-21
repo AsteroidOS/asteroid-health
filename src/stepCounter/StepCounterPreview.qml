@@ -79,6 +79,11 @@ MouseArea {
                 dataLoadingDone()
             }
             indicatorLineHeight: loggerSettings.stepGoalEnabled ? loggerSettings.stepGoalTarget : 0
+            onBarClicked: (index)=> {
+                var d = new Date()
+                d.setDate(d.getDate() - 6 + index)
+                pageStack.push(detailPage,{"currentDay": d})
+            }
         }
     }
     onClicked: pageStack.push(detailPage)

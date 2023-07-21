@@ -24,6 +24,8 @@ import org.asteroid.sensorlogd 1.0
 import "../graphs"
 
 Item {
+    id: root
+    property date currentDay: new Date()
     Flickable {
         anchors.fill: parent
         contentHeight: contentColumn.implicitHeight
@@ -33,13 +35,21 @@ Item {
 
             Item { width: parent.width; height: parent.width*0.2}
 
+            Label {
+                anchors {
+                    left: parent.left
+                    margins: app.width*0.1
+                }
+                text: graph.startTime.toLocaleDateString()
+            }
+
             StepsLineGraph {
                 id: graph
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width*0.9
                 height: app.height*2/3
-                startTime: new Date()
-                endTime: new Date()
+                startTime: root.currentDay
+                endTime: root.currentDay
             }
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
