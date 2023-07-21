@@ -22,10 +22,14 @@ import org.asteroid.controls 1.0
 Item {
     id: barGraph
     property var valuesArr: []
+    property var colorsArr: []
     property var labelsArr: []
     property var maxValue: 0
     property real indicatorLineHeight: 0
+    signal barClicked(index: int)
     function dataLoadingDone() {
+        barsRepeater.model = 0
+        labelsRepeater.model = 0 // qml doesn't refresh arrays in the same way it does other properties, so this refresh is needed
         barsRepeater.model = valuesArr.length
         labelsRepeater.model = labelsArr.length
     }
@@ -59,7 +63,7 @@ Item {
         }
         Repeater {
             id: barsRepeater
-            delegate: Item { //this contains the graph column and positions it correctly
+            delegate: MouseArea { //this contains the graph column and positions it correctly
                 width: (barGraph.width-markerParent.width)/Math.max(barGraph.valuesArr.length,3)
                 height: parent.height
                 Rectangle {
@@ -70,7 +74,9 @@ Item {
                     radius: width/2
                     property int value: barGraph.valuesArr[index]
                     height: (value/barGraph.maxValue)*parent.height
+                    color: barGraph.colorsArr.length > index ? barGraph.colorsArr[index] : "#FFF"
                 }
+                onClicked: barGraph.barClicked(index)
             }
         }
     }
