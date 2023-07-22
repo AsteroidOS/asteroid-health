@@ -76,8 +76,8 @@ private:
     QColor m_color = QColor(255,255,255);
     QPixmap m_pixmap;
     QList<QPointF> m_filedata;
-    int minValue = 0;
-    int maxValue = 0;
+    float minValue = 0;
+    float maxValue = 0;
     int minTime;
     int maxTime;
     bool graphRelative;

@@ -83,13 +83,13 @@ void LineGraph::loadGraphData(QVariant fileDataInput) {
         return;
     }
     int j = fileDataAsList.count();
-    minTime = fileDataAsList[0].toPoint().x();
-    maxTime = fileDataAsList[j-1].toPoint().x();
-    minValue = fileDataAsList[0].toPoint().y();
+    minTime = fileDataAsList[0].toPointF().x();
+    maxTime = fileDataAsList[j-1].toPointF().x();
+    minValue = fileDataAsList[0].toPointF().y();
     maxValue = minValue;
     m_filedata.clear();
     for(int i = 0; i < j; i++) {
-        m_filedata.append(fileDataAsList[i].toPoint());
+        m_filedata.append(fileDataAsList[i].toPointF());
         if (minValue > m_filedata[i].y()) minValue = m_filedata[i].y();
         if (maxValue < m_filedata[i].y()) maxValue = m_filedata[i].y();
     }
