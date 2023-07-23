@@ -84,9 +84,11 @@ Item {
                 i++
             }
 
-        } else if (delta < 7200 * maxLabels) { // check every 2 hours
-            if (delta > 3600 * maxLabels) {
-                interval = 7200 //label every 2h if 1h doesn't work - this is an ugly workaround so that a full day still gets some sort of divisions
+        } else if (delta < 14400 * maxLabels) { // check every 4 hours - this is an ugly workaround so that a full day still gets some sort of divisions
+            if (delta > 7200 * maxLabels) {
+                interval = 14400 //label every 4h if 1h doesn't work
+            } else if (delta > 3600 * maxLabels) {
+                interval = 7200 //label every 2h if 1h doesn't work
             } else if (delta < 3600 * minLabels) {
                 interval = 1800 //label every 30m otherwise
             } else {
