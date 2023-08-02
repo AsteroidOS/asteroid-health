@@ -56,6 +56,7 @@ Item {
                 checked: weightPreviewVisible.value
                 onCheckedChanged: weightPreviewVisible.value = checked
             }
+            Item { width: parent.width; height: parent.width*0.2}
         }
     }
 
