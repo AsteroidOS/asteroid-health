@@ -49,9 +49,9 @@ Item {
                 date = new Date(currentTime*1000)
                 var value
                 if (date.getMinutes() == 0 | i == 0) {
-                    value = date.getHours() + (date.getMinutes() < 10 ? ":0" + date.getMinutes().toString() : date.getMinutes().toString())
-                } else if (date.getMinutes() < 10) {
-                    value = date.getMinutes() < 10 ? ":0" + date.getMinutes().toString() : date.getMinutes().toString()
+                    value = date.getHours() + (date.getMinutes() < 10 ? ":0" + date.getMinutes().toString() : "0" + date.getMinutes().toString())
+                } else {
+                    value = date.getMinutes() < 10 ? ":0" + date.getMinutes().toString() : ":" + date.getMinutes().toString()
                 }
                 var x  = (currentTime - startTime) / delta
                 listModel.append({"value": value, "x": x})
@@ -74,9 +74,9 @@ Item {
                 date = new Date(currentTime*1000)
                 var value
                 if (date.getMinutes() == 0 | i == 0) {
-                    value = date.getHours() + (date.getMinutes() < 10 ? ":0" + date.getMinutes().toString() : date.getMinutes().toString())
-                } else if (date.getMinutes() < 10) {
-                    value = date.getMinutes() < 10 ? ":0" + date.getMinutes().toString() : date.getMinutes().toString()
+                    value = date.getHours() + (date.getMinutes() < 10 ? ":0" + date.getMinutes().toString() : ":" + date.getMinutes().toString())
+                } else {
+                    value = date.getMinutes() < 10 ? ":0" + date.getMinutes().toString() : ":" + date.getMinutes().toString()
                 }
                 var x  = (currentTime - startTime) / delta
                 listModel.append({"value": value, "x": x})
@@ -102,7 +102,7 @@ Item {
             while (currentTime < endTime) {
                 date = new Date(currentTime*1000)
                 var value
-                if (date.getMinutes() != 0 | interval != 1800) {
+                if (date.getMinutes() == 0) {
                     value = date.getHours().toString() + "h"
                 } else {
                     value = ":" + date.getMinutes()
