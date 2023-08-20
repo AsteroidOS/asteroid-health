@@ -83,6 +83,7 @@ MouseArea {
                 dataLoadingDone()
             }
             indicatorLineHeight: loggerSettings.stepGoalEnabled ? loggerSettings.stepGoalTarget : 0
+            indicatorLineColor: interpolateColors(Qt.rgba(1,0,0,1),Qt.rgba(0.06,1,0.11,1),clamp(stepsDataLoader.todayTotal/loggerSettings.stepGoalTarget,0,1))
             onBarClicked: (index)=> {
                 var d = new Date()
                 d.setDate(d.getDate() - valuesArr.length + 1 + index)

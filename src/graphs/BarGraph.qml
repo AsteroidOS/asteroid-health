@@ -26,6 +26,7 @@ Item {
     property var labelsArr: []
     property var maxValue: 0
     property real indicatorLineHeight: 0
+    property color indicatorLineColor: "#FFFFFF"
     signal barClicked(index: int)
     function dataLoadingDone() {
         barsRepeater.model = 0
@@ -47,15 +48,16 @@ Item {
     Rectangle { // indicator line
         id: indicatorLine
         height: 1
-        z: 1
+        z: 2
         width: barsRepeater.count*(barGraph.width-markerParent.width)/Math.max(barGraph.valuesArr.length,3) - height/2
         anchors.left: markerParent.right
         y: barsRow.height*(1-(barGraph,indicatorLineHeight/barGraph.maxValue))
         visible: barGraph.indicatorLineHeight != 0
+        color: barGraph.indicatorLineColor
     }
     Row { // bars
         id: barsRow
-        z: 2
+        z: 1
         anchors {
             left: markerParent.right
             top: parent.top
@@ -99,5 +101,11 @@ Item {
                 font.pixelSize: Dims.w(5)
             }
         }
+    }
+    function interpolateColors(color1, color2, position) {
+        return Qt.rgba(color1.r + (color2.r-color1.r)*position, color1.g+ (color2.g-color1.g)*position, color1.b + (color2.b-color1.b)*position,1)
+    }
+    function clamp(num, min, max) {
+        return Math.min(Math.max(num, min), max)
     }
 }

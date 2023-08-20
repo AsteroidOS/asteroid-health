@@ -91,6 +91,7 @@ Item {
                             }
                         }
                     }
+                    indicatorLineColor = interpolateColors(Qt.rgba(1,0,0,1),Qt.rgba(0.06,1,0.11,1),clamp(stepsDataLoader.getTotalForDate(stepsLineGraph.startTime)/loggerSettings.stepGoalTarget,0,1))
                     dataLoadingDone()
                 }
                 indicatorLineHeight: loggerSettings.stepGoalEnabled ? loggerSettings.stepGoalTarget : 0
