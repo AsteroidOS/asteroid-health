@@ -38,12 +38,13 @@ Item {
             Label {
                 width: parent.width*0.8
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: stepsDataLoader.getTodayTotal() ? "You've walked " + stepsDataLoader.todayTotal + " steps today, keep it up!" : "You haven't yet logged any steps today"
+                text: dateCompare(stepsLineGraph.startTime,new Date()) ? (stepsDataLoader.getTodayTotal() ?"You've walked " + stepsDataLoader.todayTotal + " steps today, keep it up!" : "You haven't yet logged any steps today") : ("You walked " + stepsDataLoader.getTotalForDate(stepsLineGraph.startTime) + " steps on this day") // 'on this day' is really clunky. TODO: revise
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
+                visible: dateCompare(stepsLineGraph.startTime,stepsLineGraph.endTime)
             }
 
-            Item { width: parent.width; height: parent.width*0.1}
+            Item { width: parent.width; height: parent.width*0.1; visible: dateCompare(stepsLineGraph.startTime,stepsLineGraph.endTime)}
             Label {
                 anchors {
                     left: parent.left
