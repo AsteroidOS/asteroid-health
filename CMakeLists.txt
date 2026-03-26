@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(asteroid-health
+project(
+	asteroid-health
 	VERSION 0.2.0
-	DESCRIPTION "Graphical interface for asteroid-sensorlogd")
+	DESCRIPTION "Graphical interface for asteroid-sensorlogd"
+)
 
 find_package(ECM REQUIRED NO_MODULE)
 find_package(AsteroidApp REQUIRED)
@@ -19,12 +21,16 @@ add_subdirectory(src)
 
 build_translations(i18n)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/asteroid-health.in
+configure_file(
+	${CMAKE_CURRENT_SOURCE_DIR}/asteroid-health.in
 	${CMAKE_BINARY_DIR}/asteroid-health
-	@ONLY)
+	@ONLY
+)
 
-install(PROGRAMS ${CMAKE_BINARY_DIR}/asteroid-health
-	DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(
+	PROGRAMS ${CMAKE_BINARY_DIR}/asteroid-health
+	DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
 
 generate_desktop(${CMAKE_SOURCE_DIR} asteroid-health)
 
