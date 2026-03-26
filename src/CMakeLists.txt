@@ -10,7 +10,7 @@ set_target_properties(asteroid-health PROPERTIES PREFIX "")
 target_link_libraries(
 	asteroid-health
 	PUBLIC
-		AsteroidApp
+		Asteroid::AsteroidApp6
 )
 
 install(
