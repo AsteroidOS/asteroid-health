@@ -24,6 +24,9 @@ For information about contributing translations or adding new languages, see [i1
 Currently available translations:
 * English (en) - Source language
 * German (de) - Sample translation
+* French (fr) - Sample translation
+* Russian (ru) - Sample translation
+* Polish (pl) - Sample translation
 
 ## Getting your data
 It should be obvious from a quick search of this source code that neither the app nor the logger contain any way to leak your data onto the internet. Your data is yours to keep: here's how you can get to it.
