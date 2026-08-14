@@ -17,15 +17,15 @@
     </message>
     <message id="id-ui-settings">
         <source>UI settings</source>
-        <translation>Ustawienia wyglądu</translation>
+        <translation>Ustawienia UI</translation>
     </message>
     <message id="id-logger-settings">
         <source>Logger settings</source>
-        <translation>Ustawienia loggera</translation>
+        <translation>Ustawienia zapisu</translation>
     </message>
     <message id="id-ui-settings-title">
         <source>UI Settings</source>
-        <translation>Ustawienia wyglądu</translation>
+        <translation>Ustawienia UI</translation>
     </message>
     <message id="id-show-step-count-preview">
         <source>Show step count preview</source>
@@ -41,7 +41,7 @@
     </message>
     <message id="id-logger-settings-title">
         <source>Logger Settings</source>
-        <translation>Ustawienia loggera</translation>
+        <translation>Ustawienia zapisu</translation>
     </message>
     <message id="id-log-step-count">
         <source>Log step count</source>
@@ -49,7 +49,7 @@
     </message>
     <message id="id-enable-steps-goal">
         <source>Enable steps goal</source>
-        <translation>Włącz cel kroków do zrobienia</translation>
+        <translation>Włącz cel kroków</translation>
     </message>
     <message id="id-log-heart-rate">
         <source>Log heart rate</source>
@@ -71,11 +71,11 @@
     <message id="id-steps-walked-on-day">
         <source>You walked %1 steps on this day</source>
         <extracomment>%1 is the number of steps</extracomment>
-        <translation>Przeszedłeś %1 kroków dzisiaj</translation>
+        <translation>Przeszedłeś dziś %1 kroków</translation>
     </message>
     <message id="id-3-weeks">
         <source>3 weeks</source>
-        <translation>3 tygodnie</translation>
+        <translation>3 tyg.</translation>
     </message>
     <message id="id-week">
         <source>week</source>
@@ -95,7 +95,7 @@
     </message>
     <message id="id-add-record">
         <source>Add record</source>
-        <translation>Dodaj rekord</translation>
+        <translation>Dodaj wagę</translation>
     </message>
 </context>
 </TS>
